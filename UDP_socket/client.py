@@ -3,18 +3,17 @@ import socket
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 print('Client: Socket Created')
 
-host = 'localhost'
-port = 5433
-message = 'Hello'
+#host = 'localhost'
+#port = 5433
+#message = 'Hello'
 
-try:
-    print('Client: ' + message)
-    client_socket.sendto(message.encode(), (host, 5435))
+client_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
 
-    data, server = client_socket.recvfrom(4096)
-    data = data.decode()
-    print('Client: ' + data)
+# Enable broadcasting mode
+client_socket.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
 
-finally:
-    print('Client: Closing socket')
-    client_socket.close()
+client_socket.bind(("", 37020))
+while True:
+    # Thanks @seym45 for a fix
+    data, addr = client_socket.recvfrom(1024)
+    print("received message: %s"%data)
