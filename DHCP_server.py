@@ -265,7 +265,7 @@ class DHCP_Server:
                 log.info("Loading clients status from pool.json")
                 self.pool = json.load(file)
                 for item in self.pool.values():
-                    if item not in self.reserved:
+                    if item not in self.reserved.values():
                         if item['time'] is not None:
                         #creates a datetime object from the given string
                             item['time'] = datetime.datetime.strptime(item['time'], '%Y-%m-%d %H:%M:%S.%f')
