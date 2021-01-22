@@ -93,7 +93,7 @@ class DHCP_Server:
             else:
                 self.debug("Can't offer any ip.")
                 return
-        self.debug("I can hear you! My IP address is " + self.ip + ". I can lease an IP address to you.")
+        self.debug("I can hear you!. I will make you an offer you can not refuse.")
         self.debugPacket(packet)
         mess = packet.encodeOpt()
         self.server_socket.sendto(mess, self.destination)
